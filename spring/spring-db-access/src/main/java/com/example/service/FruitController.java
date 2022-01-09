@@ -20,7 +20,7 @@ public class FruitController {
     public FruitController(FruitRepository repository) {
         this.repository = repository;
     }
-
+    
     @GetMapping
     @ResponseBody
     public Iterable<Fruit> getAll() {

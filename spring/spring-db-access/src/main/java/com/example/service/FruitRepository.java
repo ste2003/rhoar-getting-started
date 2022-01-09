@@ -1,26 +1,21 @@
 package com.example.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
-@Component
-public class FruitRepository {
-    public List<Fruit> findAll() {
-        return null;
-    }
+@Repository
+public interface FruitRepository extends CrudRepository<Fruit, Long> {
+// TODO query methods
+	   List<Fruit> findByName(String name);
 
-    public Fruit save(Fruit fruit) {
+	    default List<Fruit> findAllFruitsByName(String name) {
+	        return findByName(name);
+	    }
 
-        return fruit;
-    }
+	    @Query("select f from Fruit f where f.name like %?1")
+	    List<Fruit> findByNameLike(String name);
 
-    public Optional<Fruit> findById(Long id) {
-        return null;
-    }
-
-    public void deleteById(Long id) {
-
-    }
 }

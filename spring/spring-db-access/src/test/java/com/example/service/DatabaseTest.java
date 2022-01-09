@@ -40,7 +40,7 @@ public class DatabaseTest {
           .isPresent()
           .get()
           .extracting(Fruit::getName)
-          .isEqualTo("Apple");
+          .isEqualTo("Juan");
 
         Fruit apple = appleOptional.get();
         apple.setName("Green Apple");

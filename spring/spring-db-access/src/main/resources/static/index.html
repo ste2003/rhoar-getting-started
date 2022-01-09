@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>CRUD Mission - Spring Boot</title>
+    <title>Encuesta de Opinión</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/wingcss/0.1.8/wing.min.css"/>
     <style>
         input[type=number] {
@@ -32,6 +32,9 @@
 
         $scope.form = {
           id: -1,
+          opinion: "",
+          sexo: "",
+          circuns: "", 
           name: ""
         };
 
@@ -48,11 +51,17 @@
             method = "POST";
             url = '/api/fruits';
             data.name = $scope.form.name;
+            data.opinion = $scope.form.opinion;
+            data.sexo = $scope.form.sexo;
+            data.circuns = $scope.form.circuns;
           } else {
             //If Id is present, it's edit operation - PUT operation
             method = "PUT";
             url = '/api/fruits/' + $scope.form.id;
             data.name = $scope.form.name;
+            data.opinion = $scope.form.opinion;
+            data.sexo = $scope.form.sexo;
+            data.circuns = $scope.form.circuns;
           }
 
           $http({
@@ -76,6 +85,9 @@
         //In case of edit fruits, populate form with fruit data
         $scope.edit = function (fruit) {
           $scope.form.name = fruit.name;
+          $scope.form.opinion = fruit.opinion;
+          $scope.form.sexo = fruit.sexo;
+          $scope.form.circuns = fruit.circuns; 
           $scope.form.id = fruit.id;
         };
 
@@ -104,6 +116,9 @@
         //Clear the form
         function _clearForm() {
           $scope.form.name = "";
+          $scope.form.opinion = "";
+          $scope.form.sexo = "";
+          $scope.form.circuns = "";
           $scope.form.id = -1;
         }
       });
@@ -112,29 +127,64 @@
 <body ng-app="FruitManagement" ng-controller="FruitManagementController">
 
 <div class="container">
-    <h1>CRUD Mission - Spring Boot</h1>
+    <h1>Encuesta de Opinión - Dirección Gral de Informática</h1>
     <p>
-        This application demonstrates how a Spring Boot application implements a CRUD endpoint to manage <em>fruits</em>.
-        This management interface invokes the CRUD service endpoint that interacts with the database using Hibernate.
+        Por favor completar la encuesta de <em>opinión</em>.
+        Sus respuestas nos permiten mejorar nuestros procesos. Muchas gracias.
     </p>
 
     <div class="row">
         <div class="col-6">
-            <h3>Add/Edit a fruit</h3>
+            <h3>Nueva encuesta</h3>
             <form ng-submit="update()">
                 <div class="row">
-                    <div class="col-6"><input type="text" placeholder="Name" ng-model="form.name" size="60"/></div>
+                    <div class="col-6"><input type="text" placeholder="Nombre" ng-model="form.name" size="60"/></div>  
                 </div>
-                <input type="submit" value="Save"/>
+                 <div class="row">    
+                                    
+                      <p>Circunscripción Judicial</p>
+                      <div class="radio-toolbar">
+			    		<label><input type="radio"   id="circuns" value="1ra"  ng-model="form.circuns">1ra</label>
+			    		<label><input type="radio"  id="circuns" value="2da" ng-model="form.circuns">2da</label>
+			    		<label><input type="radio"  id="circuns" value="3ra" ng-model="form.circuns">3ra</label>	
+			    		<label><input type="radio"  id="circuns" value="4ta" ng-model="form.circuns">4ta</label>	
+			    		<label><input type="radio"  id="circuns" value="5ta" ng-model="form.circuns">5ta</label>			    	
+		    		  </div>
+		    		
+                    <p>Género</p>
+                    <div class="radio-toolbar">
+			    		<label><input type="radio"   id="sexo" value="Masculino"  ng-model="form.sexo">Masculino</label>
+			    		<label><input type="radio"  id="sexo" value="Femenino" ng-model="form.sexo">Femenino</label>
+			    		<label><input type="radio"  id="sexo" value="No Binario" ng-model="form.sexo">No Binario</label>			    	
+		    		</div>
+		    		<p>¿Cómo evalúas la atención brindada por esta delegación en el 2021?:</p>
+                    <div class="radio-toolbar">
+			    		<label><input type="radio"   id="opinion" value="Satisfactoria"  ng-model="form.opinion">Satisfactoria</label>
+			    		<label><input type="radio"  id="opinion" value="Algo satisfactoria" ng-model="form.opinion">Algo satisfactoria</label>
+			    		<label><input type="radio"  id="opinion" value="Insatisfactoria" ng-model="form.opinion">Insatisfactoria</label>			    	
+		    		</div>
+                </div>
+                <input type="submit" value="Enviar"/>
             </form>
         </div>
 
         <div class="col-6">
-            <h3>Fruit List</h3>
+            <h3>Total encuestas</h3>
+           
+                <div class="col-2">{{ fruits.length }}</div>         
+               
+          
+        </div>
+
+        <div class="col-6">
+            <h3>Encuestas</h3>
             <div class="row" ng-repeat="fruit in fruits">
                 <div class="col-2">{{ fruit.name }}</div>
+               <!--  <div class="col-2">{{ fruit.opinion }}</div>
+                <div class="col-2">{{ fruit.sexo }}</div>
+                <div class="col-2">{{ fruit.circuns }}</div> -->
                 <div class="col-8">
-                    <a ng-click="remove( fruit )" class="btn">Remove</a>
+                    <a ng-click="remove( fruit )" class="btn">Eliminar</a>
                 </div>
             </div>
         </div>
